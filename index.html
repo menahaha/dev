@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RiskShield AI - Gig Worker Insurance</title>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Login state overrides */
+        body.logged-out .sidebar, body.logged-out .topbar { display: none !important; }
+        body.logged-out .main-content { margin: 0; padding: 0; height: 100vh; }
+        body.logged-out .pages-container { padding: 0 !important; }
+        
+        #content-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+    </style>
+</head>
+<body class="logged-out">
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar glass-panel">
+            <div class="logo">
+                <i class="fa-solid fa-shield-halved text-neon-blue drop-glow-blue"></i>
+                <span>RiskShield <span class="text-neon-purple drop-glow-purple">AI</span></span>
+            </div>
+            
+            <nav class="nav-menu" id="nav-menu">
+                <a href="#" class="nav-item active" data-target="dashboard">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" data-target="plans">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>Plans</span>
+                </a>
+                <a href="#" class="nav-item" data-target="live-monitoring">
+                    <i class="fa-solid fa-satellite-dish"></i>
+                    <span>Live Monitor</span>
+                </a>
+                <a href="#" class="nav-item" data-target="wallet">
+                    <i class="fa-solid fa-wallet"></i>
+                    <span>Wallet</span>
+                </a>
+                <a href="#" class="nav-item" data-target="risk-insights">
+                    <i class="fa-solid fa-brain"></i>
+                    <span>Insights</span>
+                </a>
+                <a href="#" class="nav-item" data-target="profile">
+                    <i class="fa-solid fa-user-astronaut"></i>
+                    <span>Profile</span>
+                </a>
+                <a href="#" id="logout-btn" class="nav-item mt-auto border-t border-gray-dark" style="margin-top: auto; padding-top: 1rem;">
+                    <i class="fa-solid fa-arrow-right-from-bracket text-neon-pink"></i>
+                    <span class="text-neon-pink">Logout</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer glass-card mini-status border-neon-green">
+                <div class="pulse-dot safe"></div>
+                <div class="status-text">
+                    <span class="label">System Status</span>
+                    <span class="value text-neon-green">All Systems Operational</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Navbar -->
+            <header class="topbar glass-panel">
+                <div class="mobile-menu-toggle">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+                <div class="header-title">
+                    <h2 id="current-page-title">Overview</h2>
+                </div>
+                
+                <div class="topbar-actions">
+                    <div class="action-icon has-badge hover-glow-blue">
+                        <i class="fa-solid fa-bell"></i>
+                        <span class="badge bg-neon-pink">2</span>
+                    </div>
+                    <div class="user-profile">
+                        <img src="https://i.pravatar.cc/150?img=11" alt="User Avatar" class="avatar glow-border-purple">
+                        <div class="user-info">
+                            <span class="name">Rahul Verma</span>
+                            <span class="rank text-neon-blue">Diamond Tier</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Container (IFRAME) -->
+            <div class="pages-container" style="padding: 0; overflow: hidden;">
+                <iframe id="content-frame" name="content-frame" src="login.html"></iframe>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>

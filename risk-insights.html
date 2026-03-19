@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { 
+            background: transparent !important; 
+            padding: 0.5rem; 
+            min-height: 100vh; 
+        }
+        body::-webkit-scrollbar { width: 8px; }
+        body::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
+        body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+    </style>
+</head>
+<body class="page-view active">
+<div class="insights-grid">
+    <div class="glass-card chart-panel span-2 relative border-neon-purple">
+        <div class="ambient-glow glow-purple" style="opacity: 0.1"></div>
+        <h3 class="card-title mb-2 z-10 relative">Risk Prediction Probability Density</h3>
+        <div class="chart-wrapper h-64 z-10 relative">
+            <canvas id="predictionChart"></canvas>
+        </div>
+    </div>
+
+    <div class="glass-card disruption-panel flex-column content-between">
+        <div>
+            <h3 class="card-title mb-1">Disruption Probability</h3>
+            <p class="text-sm text-gray mb-2">Likelihood of working interruption today.</p>
+            <div class="big-indicator text-center mb-3 mt-1">
+                <h1 class="text-neon-pink drop-glow-pink text-5xl">34%</h1>
+            </div>
+        </div>
+        
+        <div class="probability-bars w-full">
+            <div class="prob-row flex-between text-sm mb-0.5">
+                <span class="text-gray">Rain</span>
+                <span class="text-neon-blue">45%</span>
+            </div>
+            <div class="track h-1 bg-dark-glass rounded-full mb-1.5">
+                <div class="fill bg-neon-blue h-full rounded-full glow-bg-blue" style="width: 45%;"></div>
+            </div>
+
+            <div class="prob-row flex-between text-sm mb-0.5">
+                <span class="text-gray">Traffic</span>
+                <span class="text-neon-yellow">70%</span>
+            </div>
+            <div class="track h-1 bg-dark-glass rounded-full mb-1.5">
+                <div class="fill bg-neon-yellow h-full rounded-full glow-bg-yellow" style="width: 70%;"></div>
+            </div>
+
+            <div class="prob-row flex-between text-sm mb-0.5">
+                <span class="text-gray">AQI Risk</span>
+                <span class="text-neon-pink">20%</span>
+            </div>
+            <div class="track h-1 bg-dark-glass rounded-full">
+                <div class="fill bg-neon-pink h-full rounded-full glow-bg-pink" style="width: 20%;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card ai-recommender span-3 border-neon-blue bg-tint-blue">
+        <div class="flex-row gap-2 items-start">
+            <div class="icon-block bg-dark-glass p-1 rounded-lg border-neon-blue">
+                <i class="fa-solid fa-robot text-neon-blue text-2xl drop-glow-blue"></i>
+            </div>
+            <div>
+                <h3 class="text-neon-blue mb-0.5">AI Routing Suggestion</h3>
+                <p class="text-white text-sm leading-relaxed">
+                    Avoid Koramangala block 4 between <span class="text-neon-pink border-b border-neon-pink">5 PM and 7 PM</span>. Predictive models show an 85% chance of severe waterlogging and a concurrent drop in gig rates. We recommend shifting route to <strong class="text-neon-green border-b border-neon-green">HSR layout</strong> for a 15% estimated payout increase.
+                </p>
+                <button class="btn btn-outline border-neon-blue text-neon-blue text-sm mt-1 px-2 py-0.5 rounded-full hover-bg-blue">Apply Route Shield</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script src="frame-app.js"></script>
+</body>
+</html>

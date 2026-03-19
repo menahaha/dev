@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { 
+            background: transparent !important; 
+            padding: 0.5rem; 
+            min-height: 100vh; 
+        }
+        body::-webkit-scrollbar { width: 8px; }
+        body::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
+        body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+    </style>
+</head>
+<body class="page-view active">
+<div class="profile-grid">
+    <div class="glass-card user-detail-card flex-column items-center text-center relative overflow-hidden border-neon-purple pt-3 pb-3">
+        <div class="ambient-glow glow-purple" style="opacity: 0.15"></div>
+        <div class="avatar-large relative z-10 mb-2">
+            <img src="https://i.pravatar.cc/150?img=11" alt="User" class="rounded-full border-2 border-neon-purple shadow-glow-purple w-24 h-24 object-cover">
+            <div class="status-badge absolute bottom-0 right-0 bg-neon-green w-4 h-4 rounded-full border-2 border-dark drop-glow-green"></div>
+        </div>
+        <h2 class="text-white z-10">Rahul Verma</h2>
+        <p class="text-neon-purple z-10 text-sm mb-1">ID: RS-49281</p>
+        <span class="glass-pill border-neon-purple text-neon-purple text-xs z-10 mb-2">Delivery Partner - Tier 1</span>
+        
+        <div class="stats-row flex-between w-full mt-2 pt-2 border-t border-gray-dark z-10">
+            <div class="stat-col flex-column">
+                <span class="text-xl text-white">4.8 <i class="fa-solid fa-star text-neon-yellow text-sm"></i></span>
+                <span class="text-xs text-gray">Rating</span>
+            </div>
+            <div class="stat-col flex-column">
+                <span class="text-xl text-white">1,240</span>
+                <span class="text-xs text-gray">Deliveries</span>
+            </div>
+            <div class="stat-col flex-column">
+                <span class="text-xl text-neon-green">98%</span>
+                <span class="text-xs text-gray">Safety</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card settings-panel span-2">
+        <h3 class="card-title mb-2 border-b border-gray-dark pb-1">App Preferences</h3>
+        
+        <div class="settings-list flex-column gap-2">
+            <div class="setting-item flex-between items-center bg-dark-glass p-1.5 rounded-lg border border-transparent hover-border-gray-dark transition">
+                <div class="setting-info">
+                    <h4 class="text-white text-sm mb-0.5"><i class="fa-solid fa-location-dot text-neon-blue w-2 text-center mr-0.5"></i> Share real-time telemetry</h4>
+                    <p class="text-xs text-gray">Allows AI to calculate your risk score accurately.</p>
+                </div>
+                <div class="custom-toggle active"></div>
+            </div>
+
+            <div class="setting-item flex-between items-center bg-dark-glass p-1.5 rounded-lg border border-transparent hover-border-gray-dark transition">
+                <div class="setting-info">
+                    <h4 class="text-white text-sm mb-0.5"><i class="fa-solid fa-bolt text-neon-yellow w-2 text-center mr-0.5"></i> Auto-claim triggers</h4>
+                    <p class="text-xs text-gray">Automatically file claims when weather disruption is detected.</p>
+                </div>
+                <div class="custom-toggle active"></div>
+            </div>
+
+            <div class="setting-item flex-between items-center bg-dark-glass p-1.5 rounded-lg border border-transparent hover-border-gray-dark transition">
+                <div class="setting-info">
+                    <h4 class="text-white text-sm mb-0.5"><i class="fa-solid fa-bell text-neon-pink w-2 text-center mr-0.5"></i> Push Notifications</h4>
+                    <p class="text-xs text-gray">Get alerted about high-risk zones and payouts.</p>
+                </div>
+                <div class="custom-toggle active"></div>
+            </div>
+
+            <div class="setting-item flex-between items-center bg-dark-glass p-1.5 rounded-lg border border-transparent hover-border-gray-dark transition mt-1">
+                <div class="setting-info w-full">
+                    <h4 class="text-white text-sm mb-1"><i class="fa-solid fa-clock text-neon-purple w-2 text-center mr-0.5"></i> Shift Preference</h4>
+                    <select class="custom-select w-full bg-dark-glass border border-gray-dark text-white p-1 rounded-md outline-none focus-border-neon-purple font-inter text-sm">
+                        <option value="full">Full Time (8-12 hrs)</option>
+                        <option value="part">Part Time (4-6 hrs)</option>
+                        <option value="weekend">Weekends Only</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <button onclick="window.location.href='login.html'" class="btn btn-outline border-neon-pink text-neon-pink mt-3 w-full hover-bg-pink">Logout from Device</button>
+    </div>
+</div>
+
+    <script src="frame-app.js"></script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { 
+            background: transparent !important; 
+            padding: 0.5rem; 
+            min-height: 100vh; 
+        }
+        body::-webkit-scrollbar { width: 8px; }
+        body::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
+        body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+    </style>
+</head>
+<body class="page-view active">
+<div class="page-header mb-3">
+    <p class="text-gray">AI-Optimized coverage options for your specific zones and work patterns.</p>
+</div>
+
+<div class="pricing-grid">
+    <!-- Basic Plan -->
+    <div class="glass-card pricing-card hover-lift">
+        <h3 class="plan-name text-white">Basic</h3>
+        <div class="price-display">
+            <span class="amount text-white">₹49</span><span class="duration text-gray">/wk</span>
+        </div>
+        <div class="ai-adjustment text-neon-green glass-pill mb-2 inline-block">
+            <i class="fa-solid fa-robot"></i> AI Adjusted: -₹10 (Safe Driving)
+        </div>
+        <ul class="feature-list check-list">
+            <li><i class="fa-solid fa-check text-gray"></i> Standard Accidental Cover</li>
+            <li><i class="fa-solid fa-check text-gray"></i> Minor Hospitalization</li>
+            <li class="disabled text-gray-dark"><i class="fa-solid fa-xmark text-gray-dark"></i> Weather Interruption</li>
+            <li class="disabled text-gray-dark"><i class="fa-solid fa-xmark text-gray-dark"></i> Live AI Routing</li>
+        </ul>
+        <button class="btn btn-outline border-gray text-white mt-auto full-width">Activate Plan</button>
+    </div>
+
+    <!-- Standard Plan -->
+    <div class="glass-card pricing-card border-neon-blue hover-lift scale-up glow-shadow-blue">
+        <div class="popular-tag bg-neon-blue text-dark">Most Popular</div>
+        <h3 class="plan-name text-neon-blue drop-glow-blue">Standard</h3>
+        <div class="price-display">
+            <span class="amount text-white">₹99</span><span class="duration text-gray">/wk</span>
+        </div>
+        <div class="ai-adjustment text-neon-green glass-pill mb-2 inline-block">
+            <i class="fa-solid fa-robot"></i> AI Adjusted: -₹25 (High Volume)
+        </div>
+        <ul class="feature-list check-list">
+            <li><i class="fa-solid fa-check text-neon-blue"></i> Standard Accidental Cover</li>
+            <li><i class="fa-solid fa-check text-neon-blue"></i> Major Hospitalization</li>
+            <li><i class="fa-solid fa-check text-neon-blue"></i> Basic Weather Cover</li>
+            <li class="disabled text-gray-dark"><i class="fa-solid fa-xmark text-gray-dark"></i> Income Protection</li>
+        </ul>
+        <button class="btn btn-primary bg-neon-blue text-dark glow-btn-blue mt-auto full-width">Activate Plan</button>
+    </div>
+
+    <!-- Premium Plan -->
+    <div class="glass-card pricing-card border-neon-purple hover-lift">
+        <h3 class="plan-name text-neon-purple drop-glow-purple">Premium AI</h3>
+        <div class="price-display">
+            <span class="amount text-white">₹149</span><span class="duration text-gray">/wk</span>
+        </div>
+        <div class="ai-adjustment text-neon-pink glass-pill mb-2 inline-block border-neon-pink">
+            <i class="fa-solid fa-robot text-neon-pink"></i> AI Adjusted: +₹15 (High Risk Zone)
+        </div>
+        <ul class="feature-list check-list">
+            <li><i class="fa-solid fa-check text-neon-purple"></i> All Standard Features</li>
+            <li><i class="fa-solid fa-check text-neon-purple"></i> Instant Weather Payouts</li>
+            <li><i class="fa-solid fa-check text-neon-purple"></i> Income Protection</li>
+            <li><i class="fa-solid fa-check text-neon-purple"></i> 24/7 Priority Support</li>
+        </ul>
+        <button class="btn btn-outline border-neon-purple text-neon-purple glow-btn-purple mt-auto full-width disabled cursor-default">Current Plan</button>
+    </div>
+</div>
+
+    <script src="frame-app.js"></script>
+</body>
+</html>

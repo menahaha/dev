@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { 
+            background: transparent !important; 
+            padding: 0.5rem; 
+            min-height: 100vh; 
+        }
+        body::-webkit-scrollbar { width: 8px; }
+        body::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
+        body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+    </style>
+</head>
+<body class="page-view active">
+<div class="monitoring-grid">
+    <div class="glass-card status-jumbo span-2 flex-center flex-column relative overflow-hidden">
+        <div class="ambient-glow glow-green"></div>
+        <div class="large-icon-wrapper pulse-glow-green mb-2">
+            <i class="fa-solid fa-shield-check text-neon-green drop-glow-green" style="font-size: 3rem;"></i>
+        </div>
+        <h2 class="text-neon-green drop-glow-green mb-1">Condition: SAFE</h2>
+        <p class="text-gray text-center max-w-md">No active triggers in your delivery radius. AI telemetry is actively scanning the environment.</p>
+    </div>
+
+    <div class="glass-card flex-center flex-column">
+        <div class="radar-scan mb-2">
+            <i class="fa-solid fa-satellite-dish text-neon-blue drop-glow-blue"></i>
+            <div class="scan-circle"></div>
+        </div>
+        <h3 class="text-white">Telemetry Sync</h3>
+        <p class="text-neon-green mt-1">Connected & Tracking</p>
+        <span class="text-xs text-gray mt-1">Last synced: Just now</span>
+    </div>
+
+    <div class="glass-card map-simulation span-3 relative">
+        <div class="map-header absolute top-0 left-0 w-full p-2 z-10 flex-between">
+            <h3 class="text-white drop-shadow">Live Trigger Map</h3>
+            <span class="glass-pill bg-dark-glass"><i class="fa-solid fa-location-crosshairs text-neon-blue"></i> Center GPS</span>
+        </div>
+        <div class="map-bg rounded-lg">
+            <!-- Simulated blips -->
+            <div class="blip user-blip pulse-bg-blue" style="top: 50%; left: 50%;">
+                <div class="blip-tooltip">You</div>
+            </div>
+            <div class="blip hazard-blip pulse-bg-pink" style="top: 30%; left: 70%;">
+                <div class="blip-tooltip text-neon-pink">Heavy Traffic</div>
+            </div>
+            <div class="blip hazard-blip rain pulse-bg-purple" style="top: 65%; left: 25%;">
+                <div class="blip-tooltip text-neon-purple">Waterlogging</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script src="frame-app.js"></script>
+</body>
+</html>

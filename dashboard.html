@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { 
+            background: transparent !important; 
+            padding: 0.5rem; 
+            min-height: 100vh; 
+        }
+        body::-webkit-scrollbar { width: 8px; }
+        body::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
+        body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+    </style>
+</head>
+<body class="page-view active">
+<div class="dashboard-grid">
+    <!-- AI Risk Score -->
+    <div class="glass-card flex-center risk-score-card">
+        <h3 class="card-title">AI Risk Score</h3>
+        <div class="circular-chart-container">
+            <canvas id="riskScoreChart" width="140" height="140"></canvas>
+            <div class="chart-center-val">
+                <span class="number text-neon-yellow">72</span>
+                <span class="sub text-gray">/100</span>
+            </div>
+        </div>
+        <p class="status-msg text-neon-yellow drop-glow-yellow mt-1">Moderate Risk - Traffic high</p>
+    </div>
+
+    <!-- Workability Score -->
+    <div class="glass-card workability-card">
+        <div class="card-header-flex">
+            <h3 class="card-title">Workability Score</h3>
+            <i class="fa-solid fa-briefcase text-neon-green"></i>
+        </div>
+        <div class="score-display mt-2">
+            <span class="big-score text-neon-green drop-glow-green">8.5</span>
+            <span class="max-score text-gray">/ 10</span>
+        </div>
+        <p class="text-sm text-gray mt-1 mb-2">Optimal conditions for delivery</p>
+        <div class="progress-track">
+            <div class="progress-fill bg-neon-green glow-bg-green" style="width: 85%;"></div>
+        </div>
+    </div>
+
+    <!-- Active Plan -->
+    <div class="glass-card plan-card border-neon-purple active-plan">
+        <div class="card-header-flex">
+            <h3 class="card-title">Active Plan</h3>
+            <span class="pill bg-neon-purple glass-pill">Premium AI</span>
+        </div>
+        <div class="price-display mt-2 mb-2">
+            <span class="currency text-gray">₹</span>
+            <span class="amount text-white">149</span>
+            <span class="duration text-gray">/wk</span>
+        </div>
+        <ul class="feature-list">
+            <li><i class="fa-solid fa-check text-neon-green"></i> ₹10,000 Rain Cover</li>
+            <li><i class="fa-solid fa-check text-neon-green"></i> Medical up to ₹2L</li>
+            <li><i class="fa-solid fa-check text-neon-green"></i> Income Protection</li>
+        </ul>
+        <button class="btn btn-primary bg-neon-purple glow-btn-purple mt-2 full-width" data-target="plan-selection">Upgrade Plan</button>
+    </div>
+
+    <!-- Live Environmental Data -->
+    <div class="glass-card live-data-panel span-2">
+        <h3 class="card-title mb-2">Live Environmental Telemetry</h3>
+        <div class="telemetry-grid">
+            <div class="telemetry-item hover-lift">
+                <div class="icon-wrapper glow-bg-blue"><i class="fa-solid fa-cloud-showers-heavy text-white"></i></div>
+                <div class="telemetry-info">
+                    <span class="label text-gray">Rainfall</span>
+                    <span class="value text-white">12 mm/h</span>
+                </div>
+            </div>
+            <div class="telemetry-item hover-lift">
+                <div class="icon-wrapper glow-bg-pink"><i class="fa-solid fa-smog text-white"></i></div>
+                <div class="telemetry-info">
+                    <span class="label text-gray">AQI</span>
+                    <span class="value text-white">145 <span class="text-neon-pink text-xs">(Mod)</span></span>
+                </div>
+            </div>
+            <div class="telemetry-item hover-lift">
+                <div class="icon-wrapper glow-bg-purple"><i class="fa-solid fa-temperature-half text-white"></i></div>
+                <div class="telemetry-info">
+                    <span class="label text-gray">Temp</span>
+                    <span class="value text-white">32°C</span>
+                </div>
+            </div>
+            <div class="telemetry-item hover-lift">
+                <div class="icon-wrapper glow-bg-yellow"><i class="fa-solid fa-car-side text-white"></i></div>
+                <div class="telemetry-info">
+                    <span class="label text-gray">Traffic</span>
+                    <span class="value text-neon-yellow">Heavy</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alerts -->
+    <div class="glass-card alert-card span-2 border-neon-pink bg-tint-pink">
+        <div class="alert-layout">
+            <div class="alert-icon pulse-glow-pink">
+                <i class="fa-solid fa-triangle-exclamation text-neon-pink"></i>
+            </div>
+            <div class="alert-body">
+                <h4 class="text-neon-pink">Alert: Heavy Rain Detected in Your Zone</h4>
+                <p class="text-light">Possible ₹200 payout triggering soon if rain continues for 15 mins.</p>
+            </div>
+            <div class="alert-action">
+                <button class="btn btn-outline border-neon-pink text-neon-pink hover-bg-pink">View Map</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Graph -->
+    <div class="glass-card graph-card span-3">
+        <h3 class="card-title mb-2">Weekly Risk Trends</h3>
+        <div class="chart-wrapper">
+            <canvas id="trendChart"></canvas>
+        </div>
+    </div>
+</div>
+
+    <script src="frame-app.js"></script>
+</body>
+</html>

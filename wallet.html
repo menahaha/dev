@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { 
+            background: transparent !important; 
+            padding: 0.5rem; 
+            min-height: 100vh; 
+        }
+        body::-webkit-scrollbar { width: 8px; }
+        body::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
+        body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+    </style>
+</head>
+<body class="page-view active">
+<div class="wallet-grid">
+    <!-- Balance Card -->
+    <div class="glass-card balance-card flex-between span-2 border-neon-blue relative overflow-hidden">
+        <div class="ambient-glow glow-blue"></div>
+        <div class="balance-info z-10">
+            <h3 class="text-gray mb-1">Available Balance</h3>
+            <h1 class="text-neon-blue drop-glow-blue text-4xl mb-1">₹ 1,450.00</h1>
+            <p class="text-sm text-gray">Pending AI processing: <span class="text-neon-yellow">₹ 200.00</span></p>
+        </div>
+        <div class="balance-action z-10">
+            <button class="btn btn-primary bg-neon-blue text-dark glow-btn-blue rounded-full px-3 py-1 flex-center gap-1">
+                <i class="fa-solid fa-building-columns"></i> Withdraw to UPI
+            </button>
+        </div>
+    </div>
+
+    <!-- Triggers -->
+    <div class="glass-card auto-triggers relative overflow-hidden">
+            <div class="ambient-glow glow-pink" style="opacity: 0.2"></div>
+            <h3 class="card-title mb-2 z-10 relative">Auto-Payout Triggers</h3>
+            <div class="trigger-list z-10 relative">
+                <div class="trigger-item flex-between glass-panel p-1.5 rounded-md mb-1 border-l-neon-blue">
+                    <div class="trigger-info flex-row gap-1">
+                        <i class="fa-solid fa-cloud-bolt text-neon-blue mt-0.5"></i>
+                        <div>
+                        <h4 class="text-sm">Heavy Rain > 15m</h4>
+                        <span class="text-xs text-neon-green">₹200 Instant Claim</span>
+                        </div>
+                    </div>
+                    <div class="custom-toggle active"></div>
+                </div>
+                <div class="trigger-item flex-between glass-panel p-1.5 rounded-md border-l-neon-pink">
+                <div class="trigger-info flex-row gap-1">
+                    <i class="fa-solid fa-smog text-neon-pink mt-0.5"></i>
+                    <div>
+                        <h4 class="text-sm">Severe AQI > 300</h4>
+                        <span class="text-xs text-neon-green">₹150 Bonus</span>
+                    </div>
+                </div>
+                <div class="custom-toggle"></div>
+            </div>
+            </div>
+    </div>
+
+    <!-- Transaction History -->
+    <div class="glass-card tx-history span-3">
+        <h3 class="card-title mb-2">Recent Transactions</h3>
+        <div class="table-container">
+            <table class="stellar-table w-full text-left">
+                <thead>
+                    <tr class="text-gray text-sm border-b border-gray-dark">
+                        <th class="pb-1">Date</th>
+                        <th class="pb-1">Description</th>
+                        <th class="pb-1">Type</th>
+                        <th class="pb-1 text-right">Amount</th>
+                    </tr>
+                </thead>
+                <tbody class="text-sm">
+                    <tr class="border-b border-gray-dark hover-bg-light transition">
+                        <td class="py-1.5 text-gray mt-1">Today, 2:30 PM</td>
+                        <td class="py-1.5 text-white">Rain Delay Payout <span class="text-xs text-neon-purple">(AI Triggered)</span></td>
+                        <td class="py-1.5"><span class="glass-pill border-neon-green text-neon-green text-xs">Credit</span></td>
+                        <td class="py-1.5 text-right text-neon-green border-none">+₹200</td>
+                    </tr>
+                    <tr class="border-b border-gray-dark hover-bg-light transition">
+                        <td class="py-1.5 text-gray">Mar 15, 9:00 AM</td>
+                        <td class="py-1.5 text-white">Weekly Premium Deduction</td>
+                        <td class="py-1.5"><span class="glass-pill border-neon-pink text-neon-pink text-xs">Debit</span></td>
+                        <td class="py-1.5 text-right text-neon-pink">-₹149</td>
+                    </tr>
+                    <tr class="hover-bg-light transition">
+                        <td class="py-1.5 text-gray">Mar 12, 6:45 PM</td>
+                        <td class="py-1.5 text-white">Traffic Disruption Bonus</td>
+                        <td class="py-1.5"><span class="glass-pill border-neon-green text-neon-green text-xs">Credit</span></td>
+                        <td class="py-1.5 text-right text-neon-green">+₹150</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+    <script src="frame-app.js"></script>
+</body>
+</html>
