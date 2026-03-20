@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+(<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -66,16 +66,63 @@ function ChartWrapper({ type, data, options }) {
 
     return <canvas ref={canvasRef}></canvas>;
 }
+const DB = {
+    getUsers: () => {
+        return JSON.parse(localStorage.getItem("users")) || [];
+    },
+
+    saveUsers: (users) => {
+        localStorage.setItem("users", JSON.stringify(users));
+    },
+
+    addUser: (user) => {
+        const users = DB.getUsers();
+        users.push(user);
+        DB.saveUsers(users);
+    },
+
+    findUser: (email, password) => {
+        const users = DB.getUsers();
+        return users.find(
+            (u) => u.email === email && u.password === password
+        );
+    }
+};
+function calculateRisk(data) {
+    let risk = 0;
+
+    if (data.rain) risk += 20;
+    if (data.night) risk += 15;
+
+    if (data.vehicle === "Bike") risk += 15;
+    if (data.vehicle === "Cycle") risk += 10;
+
+    if (data.hours > 10) risk += 20;
+    if (data.income < 500) risk += 10;
+
+    return Math.min(risk, 100);
+}
 
 // --- PAGE COMPONENTS ---
 
 function Login() {
     const navigate = useNavigate();
     const handleLogin = (e) => {
-        e.preventDefault();
-        localStorage.setItem('riskshield_logged_in', 'true');
-        navigate('/dashboard');
-    };
+    e.preventDefault();
+
+    const email = e.target[0].value;
+    const password = e.target[1].value;
+
+    const user = DB.findUser(email, password);
+
+    if (user) {
+        localStorage.setItem("riskshield_logged_in", "true");
+        localStorage.setItem("currentUser", JSON.stringify(user));
+        navigate("/dashboard");
+    } else {
+        alert("Invalid credentials");
+    }
+};
 
     return (
         <div className="login-wrapper">
@@ -114,91 +161,322 @@ function Login() {
                     <button type="submit" className="btn bg-neon-blue text-dark glow-btn-blue full-width text-lg border-none">
                         Authenticate <i className="fa-solid fa-arrow-right-to-bracket ml-1"></i>
                     </button>
+                    <p className="text-sm text-center mt-2">
+    New user?{" "}
+    <span
+        className="text-neon-blue"
+        style={{ cursor: "pointer" }}
+        onClick={() => navigate("/register")}
+    >
+        Create Account
+    </span>
+</p>
                 </form>
             </div>
         </div>
     );
 }
-
-function Dashboard() {
-    const riskData = {
-        labels: ['Risk', 'Safe'],
-        datasets: [{ data: [28, 72], backgroundColor: ['rgba(255, 255, 255, 0.05)', '#ffea00'], borderWidth: 0, cutout: '80%' }]
-    };
-    const riskOptions = { plugins: { legend: { display: false }, tooltip: { enabled: false } }, maintainAspectRatio: false };
-
-    const trendData = {
-        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-        datasets: [{
-            label: 'Risk Multiplier', data: [1.2, 1.5, 1.1, 2.3, 1.8, 1.0, 1.4],
-            borderColor: '#00f0ff', backgroundColor: 'rgba(0, 240, 255, 0.2)', borderWidth: 2, tension: 0.4, fill: true,
-            pointBackgroundColor: '#06060e', pointBorderColor: '#00f0ff', pointBorderWidth: 2
-        }]
-    };
-    const trendOptions = { plugins: { legend: { display: false } }, maintainAspectRatio: false, scales: { x: { grid: { display: false } }, y: { beginAtZero: true, max: 3 } } };
-
+function FormInput({ label, name, type = "text", placeholder, onChange }) {
     return (
-        <div className="dashboard-grid">
-            <div className="glass-card flex-center flex-column">
-                <h3 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text-light)' }}>AI Risk Score</h3>
-                <div style={{ position: 'relative', width: '140px', height: '140px', margin: '1.5rem 0 0.5rem' }}>
-                    <ChartWrapper type="doughnut" data={riskData} options={riskOptions} />
-                    <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', display: 'flex', alignItems: 'baseline' }}>
-                        <span className="text-neon-yellow" style={{ fontSize: '2.5rem', fontWeight: 700 }}>72</span>
-                    </div>
-                </div>
-                <p className="text-neon-yellow drop-glow-yellow mt-1 text-sm">Moderate Risk - Traffic high</p>
+        <div className="form-group-modern">
+            <label>{label}</label>
+            <input
+                type={type}
+                name={name}
+                placeholder={placeholder}
+                onChange={onChange}
+            />
+        </div>
+    );
+}
+function FormSelect({ label, name, options, onChange }) {
+    return (
+        <div className="form-group-modern">
+            <label>{label}</label>
+            <select name={name} onChange={onChange}>
+                {options.map((opt, i) => (
+                    <option key={i}>{opt}</option>
+                ))}
+            </select>
+        </div>
+    );
+}
+function FormCheckbox({ label, name, onChange }) {
+    return (
+        <label className="checkbox-modern">
+            <input type="checkbox" name={name} onChange={onChange} />
+            <span>{label}</span>
+        </label>
+    );
+}
+function FormSection({ title, children }) {
+    return (
+        <div className="form-section">
+            <div className="section-header">
+                <span className="section-line"></span>
+                <h4>{title}</h4>
             </div>
-
-            <div className="glass-card">
-                <div className="flex-between">
-                    <h3 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text-light)' }}>Workability Score</h3>
-                    <i className="fa-solid fa-briefcase text-neon-green"></i>
-                </div>
-                <div className="mt-2">
-                    <span className="text-neon-green drop-glow-green" style={{ fontSize: '3rem', fontWeight: 700, lineHeight: 1 }}>8.5</span>
-                    <span className="text-gray" style={{ fontSize: '1.2rem', fontWeight: 500 }}>/ 10</span>
-                </div>
-                <p className="text-sm text-gray mt-1 mb-2">Optimal conditions for delivery</p>
-                <div style={{ width: '100%', height: '8px', background: 'rgba(255,255,255,0.05)', borderRadius: '4px', overflow: 'hidden' }}>
-                    <div className="bg-neon-green glow-bg-green" style={{ width: '85%', height: '100%' }}></div>
-                </div>
-            </div>
-
-            <div className="glass-card border-neon-purple active-plan">
-                <div className="flex-between">
-                    <h3 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text-light)' }}>Active Plan</h3>
-                    <span className="glass-pill bg-neon-purple">Premium AI</span>
-                </div>
-                <div className="mt-2 mb-2" style={{ display: 'flex', alignItems: 'baseline'}}>
-                    <span className="text-gray" style={{fontSize: '1.5rem'}}>₹</span>
-                    <span className="text-white" style={{fontSize: '3.5rem', fontWeight: 700, lineHeight: 1}}>149</span>
-                    <span className="text-gray">/wk</span>
-                </div>
-            </div>
-
-            <div className="glass-card span-3 border-neon-pink" style={{ background: 'rgba(255, 0, 115, 0.05)' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-                    <div className="pulse-glow-pink" style={{ width: '50px', height: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', background: 'rgba(255, 0, 115, 0.1)', borderRadius: '12px' }}>
-                        <i className="fa-solid fa-triangle-exclamation text-neon-pink"></i>
-                    </div>
-                    <div>
-                        <h4 className="text-neon-pink" style={{ fontSize: '1.1rem', marginBottom: '0.25rem' }}>Alert: Heavy Rain Detected in Your Zone</h4>
-                        <p className="text-light text-sm">Possible ₹200 payout triggering soon if rain continues for 15 mins.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div className="glass-card span-3">
-                <h3 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text-light)', marginBottom: '1rem' }}>Weekly Risk Trends</h3>
-                <div style={{ width: '100%', height: '250px' }}>
-                    <ChartWrapper type="line" data={trendData} options={trendOptions} />
-                </div>
+            <div className="section-body">
+                {children}
             </div>
         </div>
     );
 }
+function FormContainer({ title, subtitle, icon, children }) {
+    return (
+        <div className="login-wrapper">
+            <div className="glass-card login-card register-card">
 
+                <div className="form-header text-center">
+                    <i className={`${icon} text-neon-purple drop-glow-purple form-icon-lg`}></i>
+                    <h2>{title}</h2>
+                    <p className="text-gray text-sm">{subtitle}</p>
+                </div>
+
+                {children}
+            </div>
+        </div>
+    );
+}
+function Register() {
+    const navigate = useNavigate();
+
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        password: "",
+        company: "Swiggy",
+        workType: "Delivery",
+        city: "",
+        income: "",
+        hours: "",
+        vehicle: "Bike",
+        rain: false,
+        night: false
+    });
+
+    const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        setFormData({
+            ...formData,
+            [name]: type === "checkbox" ? checked : value
+        });
+    };
+
+    const handleSubmit = (e) => {
+    e.preventDefault();
+    const existing = DB.getUsers().find(u => u.email === formData.email);
+
+if (existing) {
+    alert("User already exists");
+    return;
+}
+    const riskScore = calculateRisk(formData);
+
+    const user = {
+    ...formData,
+    riskScore,
+    id: Date.now(),
+    history: [
+        {
+            date: new Date().toLocaleString(),
+            risk: riskScore
+        }
+    ]
+};
+
+    DB.addUser(user);
+
+    alert("Registered! Risk Score: " + riskScore);
+
+    localStorage.setItem("currentUser", JSON.stringify(user));
+localStorage.setItem("riskshield_logged_in", "true");
+
+navigate("/dashboard");
+};
+
+    return (
+        <FormContainer
+            title="Create Your Account"
+            subtitle="Get insured. Stay protected. Work smarter."
+            icon="fa-solid fa-user-plus"
+        >
+            <form onSubmit={handleSubmit} className="form-modern">
+
+                <FormSection title="Basic Information">
+                    <FormInput label="Full Name" name="name" placeholder="Enter your name" onChange={handleChange} />
+                    <FormInput label="Email" name="email" type="email" placeholder="Enter your email" onChange={handleChange} />
+                    <FormInput label="Password" name="password" type="password" placeholder="Create password" onChange={handleChange} />
+                </FormSection>
+
+                <FormSection title="Work Profile">
+                    <FormSelect label="Company" name="company"
+                        options={["Swiggy", "Zomato", "Blinkit", "Zepto"]}
+                        onChange={handleChange}
+                    />
+                    <FormSelect label="Work Type" name="workType"
+                        options={["Delivery", "Ride"]}
+                        onChange={handleChange}
+                    />
+                    <FormInput label="City" name="city" placeholder="Enter your city" onChange={handleChange} />
+                </FormSection>
+
+                <FormSection title="Earnings & Workload">
+                    <FormInput label="Daily Income (₹)" name="income" type="number" onChange={handleChange} />
+                    <FormInput label="Working Hours" name="hours" type="number" onChange={handleChange} />
+                </FormSection>
+
+                <FormSection title="Risk Preferences">
+                    <FormSelect label="Vehicle Type" name="vehicle"
+                        options={["Bike", "Cycle", "Scooter"]}
+                        onChange={handleChange}
+                    />
+
+                    <div className="checkbox-row">
+                        <FormCheckbox label="Works in Rain" name="rain" onChange={handleChange} />
+                        <FormCheckbox label="Night Shift" name="night" onChange={handleChange} />
+                    </div>
+                </FormSection>
+
+                <button type="submit" className="btn bg-neon-blue glow-btn-blue full-width">
+                    Create Account
+                </button>
+
+                <p className="text-sm text-center mt-2">
+                    Already have an account?{" "}
+                    <span
+                        className="text-neon-blue"
+                        style={{ cursor: "pointer" }}
+                        onClick={() => navigate("/login")}
+                    >
+                        Login
+                    </span>
+                </p>
+            </form>
+        </FormContainer>
+    );
+}
+function Dashboard() {
+    useEffect(() => {
+    const interval = setInterval(() => {
+        console.log("Simulating live risk update...");
+    }, 5000);
+
+    return () => clearInterval(interval);
+}, []);
+    const user = JSON.parse(localStorage.getItem("currentUser")) || {};
+    let riskLabel = "Low Risk";
+let riskColor = "text-neon-green";
+
+if (user.riskScore > 60) {
+    riskLabel = "High Risk";
+    riskColor = "text-neon-pink";
+} else if (user.riskScore > 30) {
+    riskLabel = "Moderate Risk";
+    riskColor = "text-neon-yellow";
+}
+    const riskData = {
+        labels: ['Risk', 'Safe'],
+        datasets: [{ data: [100 - (user?.riskScore || 0), user?.riskScore || 0], backgroundColor: ['rgba(255, 255, 255, 0.05)', '#ffea00'], borderWidth: 0, cutout: '80%' }]
+    };
+
+    const riskOptions = {
+        plugins: { legend: { display: false }, tooltip: { enabled: false } },
+        maintainAspectRatio: false
+    };
+
+    const trendData = {
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        datasets: [{
+            label: 'Risk Multiplier',
+            data: [1.2, 1.5, 1.1, 2.3, 1.8, 1.0, 1.4],
+            borderColor: '#00f0ff',
+            backgroundColor: 'rgba(0, 240, 255, 0.2)',
+            borderWidth: 2,
+            tension: 0.4,
+            fill: true,
+            pointBackgroundColor: '#06060e',
+            pointBorderColor: '#00f0ff',
+            pointBorderWidth: 2
+        }]
+    };
+
+    const trendOptions = {
+        plugins: { legend: { display: false } },
+        maintainAspectRatio: false,
+        scales: {
+            x: { grid: { display: false } },
+            y: { beginAtZero: true, max: 3 }
+        }
+    };
+
+    return (
+    <>
+        <div className="dashboard-grid">
+            <div className="glass-card flex-center flex-column">
+                <h3 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text-light)' }}>
+                    AI Risk Score
+                </h3>
+
+                <div style={{ position: 'relative', width: '140px', height: '140px', margin: '1.5rem 0 0.5rem' }}>
+                    <ChartWrapper type="doughnut" data={riskData} options={riskOptions} />
+
+                    <div style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        display: 'flex',
+                        alignItems: 'baseline'
+                    }}>
+                        <span className="text-neon-yellow" style={{ fontSize: '2.5rem', fontWeight: 700 }}>
+                            {user?.riskScore || 0}
+                        </span>
+                    </div>
+                </div>
+
+                <p className={`${riskColor} mt-1 text-sm`}>
+    {riskLabel}
+</p>
+                <div className="mt-2 text-sm text-gray">
+    {user?.rain && <p>🌧 Rain increases risk</p>}
+    {user?.night && <p>🌙 Night shift risk</p>}
+    {user?.vehicle === "Bike" && <p>🏍 Bike = higher risk</p>}
+</div>
+            </div>
+
+            <div className="glass-card">
+                <div className="flex-between">
+                    <h3 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text-light)' }}>
+                        Workability Score
+                    </h3>
+                    <i className="fa-solid fa-briefcase text-neon-green"></i>
+                </div>
+
+                <div className="mt-2">
+                    <span className="text-neon-green drop-glow-green" style={{ fontSize: '3rem', fontWeight: 700 }}>
+                        8.5
+                    </span>
+                    <span className="text-gray">/ 10</span>
+                </div>
+
+                <p className="text-sm text-gray mt-1 mb-2">
+                    Optimal conditions for delivery
+                </p>
+            </div>
+        </div>
+
+<div className="glass-card mt-2">
+    <h3>Risk History</h3>
+    {user?.history?.map((h, i) => (
+        <p key={i}>
+            {h.date} → {h.risk}
+        </p>
+    ))}
+</div>
+</>
+);
+}
 function Plans() {
     return (
         <div className="pricing-grid">
@@ -313,12 +591,17 @@ function RiskInsights() {
 }
 
 function Profile() {
+    const user = JSON.parse(localStorage.getItem("currentUser")) || {};
     return (
         <div className="profile-grid">
             <div className="glass-card flex-column text-center border-neon-purple" style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem', alignItems: 'center' }}>
-                <img src="https://i.pravatar.cc/150?img=11" alt="User" style={{ borderRadius: '50%', border: '2px solid var(--neon-purple)', width: '6rem', height: '6rem', marginBottom: '1rem' }} />
-                <h2 className="text-white">Rahul Verma</h2>
-                <p className="text-neon-purple text-sm mb-2">ID: RS-49281</p>
+                <div className="profile-placeholder">
+    <i className="fa-solid fa-user"></i>
+</div>
+                <h2 className="text-white">{user?.name || "User"}</h2>
+                <p className="text-neon-purple text-sm mb-2">
+    ID: RS-{user?.id?.toString().slice(-5) || "00000"}
+</p>
                 <div className="flex-between w-full" style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid var(--text-gray-dark)' }}>
                   <div className="flex-column"><span className="text-white" style={{ fontSize: '1.25rem' }}>4.8 <i className="fa-solid fa-star text-neon-yellow"></i></span></div>
                   <div className="flex-column"><span className="text-white" style={{ fontSize: '1.25rem' }}>1,240</span><span className="text-gray text-xs">Deliveries</span></div>
@@ -346,12 +629,18 @@ function App() {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const isLoggedOut = location.pathname === '/login' || location.pathname === '/';
+    const isAuthenticated =
+    localStorage.getItem("riskshield_logged_in") === "true";
+
+const isAuthPage =
+    location.pathname === "/login" ||
+    location.pathname === "/register";
 
     const handleLogout = () => {
-        localStorage.removeItem('riskshield_logged_in');
-        navigate('/login');
-    };
+    localStorage.removeItem("riskshield_logged_in");
+    localStorage.removeItem("currentUser");
+    navigate("/login");
+};
 
     const getPageTitle = () => {
         switch (location.pathname) {
@@ -364,15 +653,22 @@ function App() {
             default: return 'Overview';
         }
     };
+const user = JSON.parse(localStorage.getItem("currentUser")) || {};
 
-    if (isLoggedOut) {
-        return (
-            <Routes>
-                <Route path="*" element={<Login />} />
-            </Routes>
-        );
-    }
+if (!isAuthenticated) {
+    return (
+        <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="*" element={<Navigate to="/login" replace />} />
+        </Routes>
+    );
+}
 
+// If logged in and tries to access login/register → redirect
+if (isAuthenticated && isAuthPage) {
+    return <Navigate to="/dashboard" replace />;
+}
     return (
         <div className="app-container">
             <aside className={`sidebar glass-panel ${sidebarOpen ? 'open' : ''}`}>
@@ -418,7 +714,7 @@ function App() {
                         <div className="user-profile" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer' }}>
                             <img src="https://i.pravatar.cc/150?img=11" alt="User Avatar" style={{ width: '44px', height: '44px', borderRadius: '50%', border: '2px solid var(--neon-purple)' }} />
                             <div className="user-info" style={{ display: 'flex', flexDirection: 'column' }}>
-                                <span className="name" style={{ fontWeight: 600, fontSize: '0.9rem' }}>Rahul Verma</span>
+                                <span className="name">{user?.name || "User"}</span>
                                 <span className="rank text-neon-blue" style={{ fontSize: '0.75rem', fontWeight: 500 }}>Diamond Tier</span>
                             </div>
                         </div>
@@ -451,3 +747,4 @@ root.render(
 </script>
 </body>
 </html>
+)
